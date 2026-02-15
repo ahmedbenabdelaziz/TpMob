@@ -26,7 +26,6 @@ class LoginActivity : AppCompatActivity() {
         val btnConnect = findViewById<Button>(R.id.btnConnect)
         val tvRegister = findViewById<TextView>(R.id.tvRegister)
 
-        // 🔵 Navigation vers RegisterActivity
         tvRegister.setOnClickListener {
             Toast.makeText(this, "CLICK OK", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, RegisterActivity::class.java))
@@ -46,9 +45,9 @@ class LoginActivity : AppCompatActivity() {
                 runOnUiThread {
                     if (code == 200 && response != null ) {
                         sessionManager.saveToken(response.token)
+                        val intent = Intent(this@LoginActivity, HouseListActivity::class.java)
+                        startActivity(intent)
                         Toast.makeText(this, "Connexion réussie", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this, HouseListActivity::class.java))
-                        finish()
                     } else {
                         Toast.makeText(this, "Erreur: $code", Toast.LENGTH_SHORT).show()
                     }

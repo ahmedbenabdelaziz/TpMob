@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Bouton retour -->
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="← Retour"
+        android:minHeight="48dp"
+        android:padding="12dp"/>
+
+    <!-- Entrer ID de la maison -->
+    <EditText
+        android:id="@+id/editHouseId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:hint="ID de la maison"
+        android:inputType="number"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Entrer login utilisateur -->
+    <EditText
+        android:id="@+id/editUserLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:hint="Login utilisateur"
+        android:inputType="text"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Bouton partager -->
+    <Button
+        android:id="@+id/btnShare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:text="Partager l'accès"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>

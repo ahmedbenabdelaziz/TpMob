@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Permission Internet (IMPORTANT pour ton API) -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,18 +15,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Stipa"
         tools:targetApi="31">
+
+        <!-- 🔵 Login devient page principale -->
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
+        <!-- Autres activités -->
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".HouseListActivity" />
+        <activity android:name=".DevicesActivity"/>
+        <activity android:name=".ShareAccessActivity" />
     </application>
 
 </manifest>
