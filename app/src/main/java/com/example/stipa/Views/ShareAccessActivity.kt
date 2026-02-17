@@ -7,6 +7,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidtp2.Api
 
+data class UserAccess(
+    val userLogin: String
+)
+
 class ShareAccessActivity : AppCompatActivity() {
 
     private val api = Api()
@@ -59,9 +63,11 @@ class ShareAccessActivity : AppCompatActivity() {
             }
 
             // Appel API pour partager l'accès
-            api.post(
+            val access = UserAccess(userLogin)
+
+            api.post<UserAccess>(
                 "$baseUrl/houses/$houseId/users",
-                mapOf("userLogin" to userLogin),
+                access,
                 onSuccess = { code ->
                     runOnUiThread {
                         when (code) {
