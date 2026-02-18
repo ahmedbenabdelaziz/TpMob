@@ -80,3 +80,4 @@ class HouseListActivity : AppCompatActivity() {
         }
     }
 }
+
