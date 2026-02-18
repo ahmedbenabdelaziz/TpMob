@@ -61,4 +61,14 @@
         android:minHeight="48dp"
         android:backgroundTint="#6200EE"
         android:textColor="#FFFFFF"/>
+    <Button
+        android:id="@+id/btnRemove"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Supprimer l'accès"
+        android:layout_marginTop="10dp"
+        android:minHeight="48dp"
+        android:backgroundTint="#B00020"
+        android:textColor="#FFFFFF"/>
 </LinearLayout>
+>
