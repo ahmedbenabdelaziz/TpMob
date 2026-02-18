@@ -21,6 +21,8 @@ class ShareAccessActivity : AppCompatActivity() {
     private lateinit var champLoginUtilisateur: EditText
     private lateinit var boutonPartager: Button
 
+    private lateinit var boutonSupprimer: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_share_access)
@@ -31,6 +33,7 @@ class ShareAccessActivity : AppCompatActivity() {
         champIdMaison = findViewById(R.id.editHouseId)
         champLoginUtilisateur = findViewById(R.id.editUserLogin)
         boutonPartager = findViewById(R.id.btnShare)
+        boutonSupprimer = findViewById(R.id.btnRemove)
 
         configurerListeners()
     }
@@ -39,8 +42,8 @@ class ShareAccessActivity : AppCompatActivity() {
         flecheRetour.setOnClickListener { finish() }
 
         boutonPartager.setOnClickListener {
-            val idMaisonTexte = champIdMaison.text.toString().trim()
-            val loginUtilisateurTexte = champLoginUtilisateur.text.toString().trim()
+            val idMaisonTexte = champIdMaison.text.toString()
+            val loginUtilisateurTexte = champLoginUtilisateur.text.toString()
 
             if (idMaisonTexte.isEmpty()) {
                 Toast.makeText(this, "Entrez l'ID de la maison", Toast.LENGTH_SHORT).show()
@@ -66,6 +69,30 @@ class ShareAccessActivity : AppCompatActivity() {
 
             partagerAcces(idMaison, loginUtilisateurTexte, token)
         }
+        boutonSupprimer.setOnClickListener {
+
+            val idMaisonTexte = champIdMaison.text.toString()
+            val loginUtilisateurTexte = champLoginUtilisateur.text.toString()
+
+            if (idMaisonTexte.isEmpty() || loginUtilisateurTexte.isEmpty()) {
+                Toast.makeText(this, "Remplir tous les champs", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val idMaison = idMaisonTexte.toIntOrNull()
+            if (idMaison == null) {
+                Toast.makeText(this, "ID invalide", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val token = gestionSession.getToken()
+            if (token == null) {
+                Toast.makeText(this, "Session expirée", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            supprimerAcces(idMaison, loginUtilisateurTexte, token)
+        }
     }
 
     private fun partagerAcces(idMaison: Int, loginUtilisateur: String, token: String) {
@@ -88,4 +115,26 @@ class ShareAccessActivity : AppCompatActivity() {
             securityToken = token
         )
     }
+    private fun supprimerAcces(idMaison: Int, loginUtilisateur: String, token: String) {
+
+        val acces = AccesUtilisateur(loginUtilisateur)
+
+        api.delete<AccesUtilisateur>(
+            "$urlBase/houses/$idMaison/users",
+            acces,
+            onSuccess = { code ->
+                runOnUiThread {
+                    when (code) {
+                        200 -> Toast.makeText(this, "Accès supprimé", Toast.LENGTH_LONG).show()
+                        400 -> Toast.makeText(this, "Données incorrectes", Toast.LENGTH_LONG).show()
+                        403 -> Toast.makeText(this, "Accès interdit", Toast.LENGTH_LONG).show()
+                        500 -> Toast.makeText(this, "Erreur serveur", Toast.LENGTH_LONG).show()
+                        else -> Toast.makeText(this, "Erreur ($code)", Toast.LENGTH_LONG).show()
+                    }
+                }
+            },
+            securityToken = token
+        )
+    }
 }
+
