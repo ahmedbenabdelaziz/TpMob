@@ -31,6 +31,7 @@
         <!-- Autres activités -->
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".PilotageMultipleActivity" />
         <activity android:name=".HouseListActivity" />
         <activity android:name=".DevicesActivity"/>
         <activity android:name=".ShareAccessActivity" />

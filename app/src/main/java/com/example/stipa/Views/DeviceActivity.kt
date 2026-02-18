@@ -5,7 +5,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidtp2.Api
 
-data class Device(
+data class Appareil(
     val id: String,
     val type: String,
     val availableCommands: List<String>,
@@ -13,7 +13,7 @@ data class Device(
     val power: Int? = null
 )
 
-data class DevicesResponse(val devices: List<Device>)
+data class DevicesResponse(val devices: List<Appareil>)
 data class CommandRequest(val command: String)
 
 class DevicesActivity : AppCompatActivity() {
@@ -28,6 +28,11 @@ class DevicesActivity : AppCompatActivity() {
 
         sessionManager = SessionManager(this)
         val devicesList = findViewById<ListView>(R.id.devicesList)
+        val btnBack = findViewById<TextView>(R.id.btnBack)
+
+        btnBack.setOnClickListener {
+            onBackPressed()
+        }
 
         val houseId = intent.getIntExtra("houseId", -1)
         if (houseId == -1) {
@@ -38,7 +43,6 @@ class DevicesActivity : AppCompatActivity() {
 
         val token = sessionManager.getToken()
 
-        // Appel API pour récupérer les périphériques
         api.get<DevicesResponse>(
             "$baseUrl/houses/$houseId/devices",
             onSuccess = { code, response ->
@@ -52,9 +56,9 @@ class DevicesActivity : AppCompatActivity() {
                         )
 
                         devicesList.setOnItemClickListener { _, _, position, _ ->
-                            val device = response.devices[position]
-                            if (device.availableCommands.isNotEmpty()) {
-                                sendCommand(houseId, device.id, device.availableCommands[0])
+                            val appareil = response.devices[position]
+                            if (appareil.availableCommands.isNotEmpty()) {
+                                sendCommand(houseId, appareil.id, appareil.availableCommands[0])
                             } else {
                                 Toast.makeText(this, "Pas de commande disponible", Toast.LENGTH_SHORT).show()
                             }

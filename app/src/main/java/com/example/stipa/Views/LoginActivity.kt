@@ -13,6 +13,8 @@ class LoginResponse(val token: String)
 class LoginActivity : AppCompatActivity() {
 
     private val api = Api()
+    // Nous utilisons SharedPreferences pour stocker le token
+// car nous avons rencontré un problème avec Jetpack DataStore
     private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
